@@ -1,0 +1,93 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a67d8705",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import os\n",
+    "import pickle\n",
+    "    \n",
+    "    \n",
+    "# This utility was created because students were getting confused when they ran \n",
+    "# their notebooks twice, the previous write-to-file code would do nothing and say  \n",
+    "# nothing. The students thought the file was over-written when in fact, it was not -\n",
+    "# generating hidden bugs in subsequent notebooks.\n",
+    "\n",
+    "def save_file(data, fname, dname):\n",
+    "    \"\"\"Save a datafile (data) to a specific location (dname) and filename (fname)\n",
+    "    \n",
+    "    Currently valid formats are limited to CSV or PKL.\"\"\"\n",
+    "    \n",
+    "    if not os.path.exists(dname):\n",
+    "        os.mkdir(dname)\n",
+    "        print(f'Directory {dname} was created.')\n",
+    "        \n",
+    "    fpath = os.path.join(dname, fname)\n",
+    "    \n",
+    "    \n",
+    "    if os.path.exists(fpath):\n",
+    "        print(\"A file already exists with this name.\\n\")\n",
+    "\n",
+    "        yesno = None\n",
+    "        while yesno != \"Y\" and yesno != \"N\":\n",
+    "            yesno = input('Do you want to overwrite? (Y/N)').strip()[0].capitalize()\n",
+    "            if yesno == \"Y\":\n",
+    "                print(f'Writing file.  \"{fpath}\"')\n",
+    "                _save_file(data, fpath)\n",
+    "                break  # Not required\n",
+    "            elif yesno == \"N\":\n",
+    "                print('\\nPlease re-run this cell with a new filename.')\n",
+    "                break  # Not required\n",
+    "            else:\n",
+    "                print('\\nUnknown input, please enter \"Y\" or \"N\".')\n",
+    "\n",
+    "    else:  # path does not exist, ok to save the file\n",
+    "        print(f'Writing file.  \"{fpath}\"')\n",
+    "        _save_file(data, fpath)\n",
+    "        \n",
+    "        \n",
+    "        \n",
+    "        \n",
+    "        \n",
+    "        \n",
+    "def _save_file(data, fpath):\n",
+    "    valid_ftypes = ['.csv', '.pkl']\n",
+    "    \n",
+    "    assert (fpath[-4:] in valid_ftypes), \"Invalid file type.  Use '.csv' or '.pkl'\"\n",
+    "\n",
+    "    # Figure out what kind of file we're dealing with by name\n",
+    "    if fpath[-3:] == 'csv':\n",
+    "        data.to_csv(fpath, index=False)\n",
+    "    elif fpath[-3:] == 'pkl':\n",
+    "        with open(fpath, 'wb') as f:\n",
+    "            pickle.dump(data, f)\n",
+    "            "
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
